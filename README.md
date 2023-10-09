@@ -1,10 +1,13 @@
 # Golang Boilerplate
 
-Simple Golang boilerplate using:
-* [Firebase](firebase.google.com) for authentication
-* [Gin](github.com/gin-gonic/gin) for routing
-* [Gorm](gorm.io/gorm) for ORM
-* [Viper](github.com/spf13/viper) for environment settings
+Golang boilerplate based on [Uncle Bob's Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) with slight modification on the DB layer (this project use ORM). The technologies used in this project are:
+
+- [Firebase](firebase.google.com) for authentication
+- [Gin](github.com/gin-gonic/gin) for routing
+- [Viper](github.com/spf13/viper) for environment settings
+- [Gorm](gorm.io/gorm) as ORM
+- [SQLite](https://www.sqlite.org) as database
+- [PostgreSQL](https://www.postgresql.org) as an alternative to SQLite
 
 ## Project Setup
 
@@ -13,28 +16,20 @@ You can rename the project by replacing all "boilerplate" to your new project na
 To start the project, you need to make sure that you have Go (Golang) and Docker installed. Then you can run these commands to install Golang dependency:
 
 ```
-go get github.com/gin-gonic/gin
-go get github.com/gin-contrib/cors
-go get github.com/spf13/viper
-go get gorm.io/gorm
-go get gorm.io/driver/postgres
+go get
 ```
 
 ### Integrating Firebase
 
-If you want to use firebase, you need to duplicate `firebaseServiceAccountKey.json.sample` and remove the `.sample` to `firebaseServiceAccountKey.json` and provide your service account key in that file. Then, you need to run this command:
-
-```
-go get firebase.google.com/go
-```
+If you want to use Firebase, you need to provide your service account key and name the file to `firebaseServiceAccountKey.json`. Check out `firebaseServiceAccountKey.json.sample` to make sure you have the correct file and place it in the correct directory.
 
 ### Modify Configuration
 
-This app will take configurations from environment variables or `.env` file in `/config`. If you're running this app locally, it is recommended to duplicate the `.env.sample` file in `/config` and rename it to `.env`.
+This app will take configurations from environment variables or `.env` file in root folder. Duplicate the `.env.sample` file and rename it to `.env`. Then, configure the environment variables according to your needs. The default configuration is usable.
 
 ### Integrating Database
 
-You can change the database settings by editing the environment variables or `.env` file from the previous step. By default, this app will use PostgreSQL as database. If you want to run a PostgreSQL database in Docker, you can run:
+You can change the database settings by editing the environment variables or `.env` file from the previous step. By default, this app will use SQLite as database stored in `gorm.db` file in root folder. If you want to run a PostgreSQL database in Docker, you can run:
 
 ```
 bash start_db.sh
@@ -49,14 +44,17 @@ go mod tidy
 go run main.go
 ```
 
-By default, you can access the app from `http://localhost:8080/`
+By default, you can access the app from `http://localhost:8080/`.
+
+## API Documentation
+
+The REST API documentation is accessible from `docs/docs.http`. If you want to test the REST API from this file, you can use this [VSCode REST Client Extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client). Please don't forget to change the Firebase API key in `@firebase_api_key`.
 
 ## Future Plan
 
 1. Integrate Redis
 2. Websocket
-3. Deploy to Google Cloud Platform example
-4. Deploy to Amazon Web Service example
-5. Deploy to Heroku example
-6. Move Firebase integration to another branch
-7. Add authentication provider in another branch
+3. Terraform + Docker deployment
+4. SonarQube
+5. Unit test
+6. Prometeus + Grafana

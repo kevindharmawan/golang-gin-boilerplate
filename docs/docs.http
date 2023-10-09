@@ -1,0 +1,132 @@
+@host = localhost:8080
+@user_email = test@mail.com
+@user_password = 12345678
+@firebase_api_key = FIREBASE_API_KEY
+
+##################################################
+#
+# Ping
+#
+##################################################
+
+### Ping
+# @name ping
+
+GET http://{{host}}/api/ping HTTP/1.1
+
+##################################################
+#
+# Authentication
+#
+##################################################
+
+### Signup
+# @name signup
+
+POST https://identitytoolkit.googleapis.com/v1/accounts:signUp?key={{firebase_api_key}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "{{user_email}}",
+    "password": "{{user_password}}",
+    "returnSecureToken": true
+}
+
+### Signin
+# @name signin
+
+POST https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={{firebase_api_key}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "{{user_email}}",
+    "password": "{{user_password}}",
+    "returnSecureToken": true
+}
+
+### Get me
+@access_token = {{signin.response.body.idToken}}
+
+##################################################
+#
+# User
+#
+##################################################
+
+### Get user
+# @name get-user
+
+GET http://{{host}}/api/user/get HTTP/1.1
+Authorization: Bearer {{access_token}}
+
+### Create user
+# @name create-user
+
+POST http://{{host}}/api/user/create HTTP/1.1
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+    "name": "John Doe"
+}
+
+### Update user
+# @name update-user
+
+PATCH http://{{host}}/api/user/update HTTP/1.1
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+    "name": "Josh Doe"
+}
+
+### Delete user
+# @name delete-user
+
+DELETE http://{{host}}/api/user/delete HTTP/1.1
+Authorization: Bearer {{access_token}}
+
+##################################################
+#
+# Example
+#
+##################################################
+
+@example_id = 1
+
+### Get examples
+# @name get-examples
+
+GET http://{{host}}/api/example/get HTTP/1.1
+
+### Get example
+# @name get-example
+
+GET http://{{host}}/api/example/get/{{example_id}} HTTP/1.1
+
+### Create example
+# @name create-example
+
+POST http://{{host}}/api/example/create HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Example Name",
+    "description": "Example description for example name."
+}
+
+### Update example
+# @name update-example
+
+PATCH http://{{host}}/api/example/update/{{example_id}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "description": "Updated example description for example name."
+}
+
+### Delete example
+# @name delete-example
+
+DELETE http://{{host}}/api/example/delete/{{example_id}} HTTP/1.1

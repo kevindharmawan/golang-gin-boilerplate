@@ -7,7 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CorsMiddleware(c *gin.Context) {
+type CorsMiddleware struct{}
+
+func NewCorsMiddleware() *CorsMiddleware {
+	return &CorsMiddleware{}
+}
+
+func (cm *CorsMiddleware) CorsMiddleware(c *gin.Context) {
 	cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE"},
