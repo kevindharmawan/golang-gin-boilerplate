@@ -13,7 +13,7 @@ Golang boilerplate based on [Uncle Bob's Clean Architecture](https://blog.cleanc
 
 You can rename the project by replacing all "boilerplate" to your new project name in every file.
 
-To start the project, you need to make sure that you have Go (Golang) and Docker installed. Then you can run these commands to install Golang dependency:
+To start the project, you need to make sure that you have Go (Golang) and Docker installed. Then you can run this commands to install Golang dependency:
 
 ```
 go get
